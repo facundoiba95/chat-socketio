@@ -1,0 +1,106 @@
+.containerChat{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    width: 100%;
+    max-width: 700px;
+    min-width: 500px;
+}
+
+.messageMe, .messageRecived{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 1.3rem;
+    position: relative;
+    width: auto;
+    max-width: 650px;
+    height: auto;
+    padding: 10px 10px 0px 10px;
+    text-align: left;
+    line-height: 0px;
+}
+
+.messageMe{
+    background-color: rgb(167, 218, 65);
+    border-radius: 5px 15px 5px 15px;
+    color:black;
+}
+
+.messageRecived{
+    background-color:rgb(255, 255, 255);
+    border-radius: 15px 5px 15px 5px;
+    color:black;
+}
+
+.messageMe small, .messageRecived small{  
+    font-weight: 600;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.messageContainer{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    word-break:break-all;
+    line-height: 20px;
+}
+
+.messageContainer p{
+    text-align: left;
+    /* height: 100%; */
+    text-overflow:ellipsis;
+    word-wrap:break-word;
+
+}
+
+.notification{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.listChat{
+    padding-bottom:20px;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    align-items: flex-start;
+    width: 100%;
+    gap:10px;
+    height: 100%;
+    max-height: 500px;
+    min-height: 500px;
+    overflow-y: scroll;
+}
+
+.listChat::-webkit-scrollbar{
+    width: 10px;
+    background-color: gray;
+}
+.listChat::-webkit-scrollbar-thumb{
+    background-color:indianred;
+}
+
+.hour{
+    position: absolute;
+    font-size: 1rem;
+    right: 5px;
+    bottom:-5px;
+    font-weight: 600;
+}
+
+form{
+    position: relative;
+    padding-top: 70px;
+}
+
+.typingMessage{
+    position: absolute;
+    width: 100%;
+    top:0;
+}
