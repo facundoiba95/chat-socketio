@@ -8,6 +8,7 @@ const Chat = () => {
     const chatListRef = useRef(null);
     const date = `${new Date().getHours()}:${new Date().getMinutes()}`;
     const [ typingUserMessage, setTypingUserMessage ] = useState('');
+    const [ notifications, setNotifications ] = useState([]); 
     /* el estado "listMessages" se setea dos veces, la primera vez para que 
       renderice en la pantalla de quien envia el mensaje
       y la segunda vez es para qeu renderice en la pantalla de quien recibe el mensaje */
@@ -55,11 +56,19 @@ const Chat = () => {
             setListMessages([ ... listMessages, newMessage ])
         };
 
+        const notificationMessage = (data) => {
+            setListMessages([ ... listMessages, data ])
+        }
+
         socket.on('message', (data) => recivedMessage(data));
+        socket.on('userDisconnect', (data) => notificationMessage(data));
+        socket.on('userLogin', (data) => notificationMessage(data))
 
         scrollToLastMessage();
         return () => {
             socket.off('message', (data) => recivedMessage(data));
+            socket.off('userDisconnect', (data) => notificationMessage(data));
+            socket.off('userLogin', (data) => notificationMessage(data))
         }
     }, [ listMessages ])
 
@@ -79,25 +88,12 @@ const Chat = () => {
             }
         }
 
-        const userDisconnectMessage = (data) => {
-            setListMessages([... listMessages, data])
-        }
-
-        const userLoginMessage = (data) => {
-            setListMessages([ ... listMessages, data ])
-        }
-        
         socket.on('logged', (data) => recivedUsers(data));
         socket.on('typing', (data) => typingMessageInChat(data));
-        socket.on('usersOnline', (data) => recivedUsers(data))
-        socket.on('userDisconnect', (data) => userDisconnectMessage(data));
-        socket.on('userLogin', (data) => userLoginMessage(data))
+
         return () => {
             socket.off('logged', (data) => recivedUsers(data));
-            socket.off('usersOnline', (data) => recivedUsers(data));
             socket.off('typing', (data) => typingMessageInChat(data));
-            socket.off('userDisconnect', (data) => userDisconnectMessage(data));
-            socket.off('userLogin', (data) => userLoginMessage(data))
         }
     }, [ usersOnline ])
 
@@ -105,6 +101,7 @@ const Chat = () => {
   return (
     <div className='containerChat'>
        <h2>Chat</h2>
+       <h3><a href="http://localhost:5173" target='_blank'>Agregar nuevo usuario.</a></h3>
        <ul className='listChat' ref={chatListRef}>
         {
             listMessages.map((msg, index) => {
@@ -112,16 +109,17 @@ const Chat = () => {
                     <>
                     {
                         msg.messageDisconnect ?
-                        <span style={{color:'crimson'}} className='notification'>
+                        <span style={{color:'crimson'}} className='notification' key={index}>
                             <p>{msg.messageDisconnect}</p>
                             <small>{msg.hour}</small>
                         </span>
                         : msg.messageLogin ?
-                        <span style={{color:'yellowgreen'}} className='notification'>
+                        <span style={{color:'yellowgreen'}} className='notification' key={index}>
                             <p>{msg.messageLogin}</p>
                             <small>{msg.hour}</small>
                         </span>
-                        : <li key={index} className={`${msg.id == socket.id ? 'messageMe' : 'messageRecived'}`}>
+                        :
+                        <li key={index} className={`${msg.id == socket.id ? 'messageMe' : 'messageRecived'}`}>
                             <small style={{color:`${msg.color}`}}>{msg.user}</small>
                             <span className='messageContainer'>
                               <p>{msg.message}</p>
