@@ -44,7 +44,7 @@ const Login = () => {
   return (
     <form className='loginContainerStyle' onSubmit={handleLogin}>
       <h1>Socket.io + Express + Vite React JS + CSS</h1>
-      <h3>Ingresá tu nombre de usuario. Puédes <a href="http://localhost:5173" target='_blank'>abrir otra ventana</a> para crear otro usuario y enviár mensajes. </h3>
+      <h3>Ingresá tu nombre de usuario. Puédes <a href="/" target='_blank'>abrir otra ventana</a> para crear otro usuario y enviár mensajes. </h3>
       <h2>Ingresa tu nombre para entrar al chat!</h2>
         <input type="text" value={user} onChange={(e) => setUser(e.target.value)}/>
         <button>Ingresar</button>
