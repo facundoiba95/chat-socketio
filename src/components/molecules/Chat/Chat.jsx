@@ -101,7 +101,7 @@ const Chat = () => {
   return (
     <div className='containerChat'>
        <h2>Chat</h2>
-       <h3><a href="http://localhost:5173" target='_blank'>Agregar nuevo usuario.</a></h3>
+       <h3><a href="/index.html" target='_blank'>Agregar nuevo usuario.</a></h3>
        <ul className='listChat' ref={chatListRef}>
         {
             listMessages.map((msg, index) => {
